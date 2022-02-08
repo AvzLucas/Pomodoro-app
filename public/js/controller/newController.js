@@ -18,6 +18,7 @@ angular.module('app').controller('APIctrl', function($scope, $http){
 
     $scope.pomodoroStart = ()=>{
         $scope.resetButtonClasses()
+        socket.emit('interaction')
         socket.emit('startTimer')
         let tm = new easytimer.Timer({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})
         tm.start()
@@ -33,6 +34,7 @@ angular.module('app').controller('APIctrl', function($scope, $http){
 
     $scope.breakStart = ()=>{
         $scope.resetButtonClasses()
+        socket.emit('interaction')
         socket.emit('break')
         let tm = new easytimer.Timer({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})
         tm.start()
@@ -48,6 +50,7 @@ angular.module('app').controller('APIctrl', function($scope, $http){
 
     $scope.postpone = ()=>{
         $scope.resetButtonClasses()
+        socket.emit('interaction')
         socket.emit('postponeBreak')
         let tm = new easytimer.Timer({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
         tm.start()

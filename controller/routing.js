@@ -1,5 +1,6 @@
 const timer = require('easytimer.js')
 
+
 module.exports = function(io){
     let pomodoroCycle = 0;
     console.log(pomodoroCycle)
@@ -16,10 +17,20 @@ module.exports = function(io){
 
         socket.on('startTimer',()=> {
             console.log('ouvi o evento')
-            tm.start({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})
+            if(pomodoroCycle == 4){
+                tm.start({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
+            }else{
+                tm.start({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})
+            }
             tm.addEventListener('targetAchieved',()=>{
                 console.log('target achieved')
                 socket.emit('pomodoroFinished')
+                let interv = setInterval(()=>{
+                    socket.emit('pomodoroFinished')
+                }, 10000)
+                socket.on('interaction',()=>{
+                    clearInterval(interv)
+                })
                 pomodoroCycle++
                 tm.removeAllEventListeners()
             })
@@ -28,13 +39,17 @@ module.exports = function(io){
         socket.on('postponeBreak', ()=>{
             console.log('adiar a pausa em 10min')
             tm.start({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
-            tm.addEventListener('targetAchieved',()=>{
+            tm.addEventListener('targetAchieved', ()=>{
                 console.log('target achieved')
                 socket.emit('pomodoroFinished')
-                pomodoroCycle++
+                let interv = setInterval(()=>{
+                    socket.emit('pomodoroFinished')
+                }, 10000)
+                socket.on('interaction',()=>{
+                    clearInterval(interv)
+                })
                 tm.removeAllEventListeners()
             })
-
         })
 
         socket.on('break', ()=>{
@@ -42,6 +57,12 @@ module.exports = function(io){
             tm.start({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})        
             tm.addEventListener('targetAchieved', ()=>{
                 socket.emit('breakIsOver')
+                let interv = setInterval(()=>{
+                    socket.emit('breakIsOver')
+                }, 10000)
+                socket.on('interaction',()=>{
+                    clearInterval(interv)
+                })
                 console.log('pausa encerrada')
                 tm.removeAllEventListeners()
             })
