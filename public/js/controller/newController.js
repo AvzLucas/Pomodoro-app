@@ -6,7 +6,7 @@ angular.module('app').controller('APIctrl', function($scope, $http){
     socket.on('pomodoroFinished', ()=>{
         $scope.sendNotification()
         //show buttons
-        $scope.displayButtons('pausar')
+        $scope.displayButtons('break')
         $scope.displayButtons('postponeBtn')
     })
 
@@ -79,15 +79,15 @@ angular.module('app').controller('APIctrl', function($scope, $http){
 
     $scope.displayButtons = (button)=>{
         let postponeBtn = document.querySelector('.postpone')
-        let pause = document.querySelector('.pausar')
+        let pause = document.querySelector('.break')
         let quit = document.querySelector('.quit')
         let resumeWork = document.querySelector('.resumeWork')
         switch(button){
             case 'postponeBtn':
                 postponeBtn.classList = 'ui inverted red button postpone'
                 break;
-            case 'pausar' :
-                pause.classList = 'ui inverted green button pausar'
+            case 'break' :
+                pause.classList = 'ui inverted green button break'
                 break;
             case 'quit' : 
                 quit.classList = 'ui inverted red button button quit'
@@ -97,13 +97,13 @@ angular.module('app').controller('APIctrl', function($scope, $http){
         }
     }
 
-    $scope.resetButtonClasses = ()=>{
+    $scope.resetButtonClasses = () => {
         let postponeBtn = document.querySelector('.postpone')
-        let pause = document.querySelector('.pausar')
+        let pause = document.querySelector('.break')
         let quit = document.querySelector('.quit')
         let resumeWork = document.querySelector('.resumeWork')
         postponeBtn.classList = 'ui inverted red button hidden postpone'
-        pause.classList = 'ui inverted green button hidden pausar'
+        pause.classList = 'ui inverted green button hidden break'
         quit.classList = 'ui inverted red button button hidden quit'
         resumeWork.classList = 'ui inverted green button hidden resumeWork'    
     }

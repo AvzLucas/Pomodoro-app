@@ -24,13 +24,17 @@ module.exports = function(io){
             }
             tm.addEventListener('targetAchieved',()=>{
                 console.log('target achieved')
+
                 socket.emit('pomodoroFinished')
+
                 let interv = setInterval(()=>{
                     socket.emit('pomodoroFinished')
                 }, 10000)
+
                 socket.on('interaction',()=>{
                     clearInterval(interv)
                 })
+
                 pomodoroCycle++
                 tm.removeAllEventListeners()
             })
@@ -41,13 +45,17 @@ module.exports = function(io){
             tm.start({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
             tm.addEventListener('targetAchieved', ()=>{
                 console.log('target achieved')
+
                 socket.emit('pomodoroFinished')
+
                 let interv = setInterval(()=>{
                     socket.emit('pomodoroFinished')
                 }, 10000)
+
                 socket.on('interaction',()=>{
                     clearInterval(interv)
                 })
+
                 tm.removeAllEventListeners()
             })
         })
@@ -57,12 +65,15 @@ module.exports = function(io){
             tm.start({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})        
             tm.addEventListener('targetAchieved', ()=>{
                 socket.emit('breakIsOver')
+
                 let interv = setInterval(()=>{
                     socket.emit('breakIsOver')
                 }, 10000)
+
                 socket.on('interaction',()=>{
                     clearInterval(interv)
                 })
+
                 console.log('pausa encerrada')
                 tm.removeAllEventListeners()
             })
