@@ -62,7 +62,6 @@ angular.module('app').controller('APIctrl', function($scope, $http){
               minutes.innerHTML = tm.getTimeValues().minutes
               seconds.innerHTML = tm.getTimeValues().seconds
           })
-
     }
 
     //envia notificação para o usuário realizar pausa
