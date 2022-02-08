@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='app'>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talk to the bot</title>
+    <link rel="stylesheet" href="../css/fontawesome-4.7/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/Semantic-UI-CSS-master/semantic.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src = "/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div class="wrapper ui container center aligned" ng-controller='APIctrl as ctrl'>
+       <div class="playPause">
+            <div class="playButton">
+                <i class="fa fa-play-circle btn1 start" ng-click='pomodoroStart()' aria-hidden="true" ></i>
+                <h3>Start working</h3>
+            </div>
+            <div class="pauseButton">
+                <i class="fa fa-pause-circle btn2 pause" ng-click='timerPomodoro.pause()'aria-hidden="true" ng-click='pause()'></i>
+                <h3>Take a break</h3>
+            </div>
+       </div>
+       <div class="pomodoroBox ui segment">
+           <div class="timerBox">
+               <h2 class="time ui inverted pink segment huge header">
+                   <span class="minutes">0</span>
+                   <span>:</span>
+                   <span class="seconds">0</span>
+                </h2>
+           </div>
+           <div class="controls ui segment">
+               <button class="ui inverted red button hidden postpone" ng-click='postpone()'>Adiar +10min</button>
+               <button class="ui inverted green button hidden pausar" ng-click='breakStart()'>Fazer uma pausa</button>
+               <button class="ui inverted red button button hidden quit" ng-click='closeCycle()'>Vou parar por aqui.</button>
+               <button class="ui inverted green button hidden resumeWork" ng-click='pomodoroStart()'>Ok. Vamos lá!</button>
+           </div>
+       </div>
+    </div>
+    <script src="../js/angular/angular.min.js"></script>
+    <script src="../js/easytimer.js/dist/easytimer.min.js"></script>
+    <script src="../js/controller/newController.js"></script>
+    <script>
+        window.onload = ()=>{
+            Notification.requestPermission()
+        }
+        //change button colors on click
+        let i = 0
+        let btn1 = document.querySelector('.btn1')
+        let btn2 = document.querySelector('.btn2')
+
+        btn1.addEventListener('click', ()=>{
+            if (i == 0){
+                btn1.style.color = 'green'
+                btn1.style.opacity = '1'
+                btn2.style.color = 'grey'
+                btn2.style.opacity = '0.5'
+                i = 1
+            }  
+        })
+
+        btn2.addEventListener('click', ()=>{
+            if(i == 1){
+                btn2.style.color = 'green'
+                btn2.style.opacity = '1'
+                btn1.style.opacity = '0.5'
+                btn1.style.color = 'grey'
+                i = 0
+            }
+        })
+
+    </script>
+    <script src="../css/Semantic-UI-CSS-master/semantic.min.js"></script>
+    <script>
+        // const socket = io.connect()
+        // socket.on('listening',()=>{
+        //     console.log('something')
+        // })
+        // socket.emit('startTimer')
+    </script>
+</body>
+</html>

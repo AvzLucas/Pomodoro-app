@@ -1,0 +1,77 @@
+body{
+    height: 100vh;
+    background: rgb(243, 240, 240);
+    display: grid;
+    place-items: center;
+}
+.playPause{
+    background: rgb(192, 186, 186);
+    width:350px;
+    border: 1px solid rgb(206, 198, 198);
+    border-radius: 8px;
+    padding:15px;
+    box-shadow: 6px 4px 5px white inset;
+    border: 1px solid;
+    background: black;
+}
+.playPause > div{
+    display: flex;
+    align-items: center;
+}
+.playPause > div h3{
+    color: white;
+}
+.playPause div i{
+    font-size: 1.9em;
+    color: grey;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.wrapper{
+    display:flex;
+    height: 70%;
+    flex-direction:column;
+    justify-content: space-between;
+}
+
+.control{
+    min-width: 400px;
+    background: rgb(26, 25, 25);
+    padding: 5px;
+    border: 1px solid grey;
+    border-radius : 8px;
+    box-shadow: 2px 2px 5px rgb(145, 139, 139),
+                    -2px -2px 6px rgb(148, 145, 145);
+    box-shadow: 6px 4px 5px white inset;                
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.control .returnBoard{
+    width: 95%;
+    height: 100px;
+    background: white;
+    border-radius:10px;
+    box-shadow: -5px -5px 10px grey inset;
+}
+
+.control .buttonWrap, .buttonWrap button{
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.control .buttonWrap{
+    color: white;
+}
+
+.control textarea{
+    outline: none;
+    border: 1px solid rgb(232, 221, 221);
+}
+.controls > .hidden{
+    display: none;
+}

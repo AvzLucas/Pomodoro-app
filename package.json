@@ -1,0 +1,22 @@
+{
+  "name": "botapi",
+  "version": "1.0.0",
+  "description": "Send requests to a discord bot",
+  "main": "app",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lucas",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.6.9",
+    "angularjs": "^0.0.1",
+    "axios": "^0.25.0",
+    "cors": "^2.8.5",
+    "easytimer.js": "^4.5.1",
+    "express": "^4.17.2",
+    "fontawesome-4.7": "^4.7.0",
+    "node-cron": "^3.0.0",
+    "socket.io": "^4.4.1"
+  }
+}
