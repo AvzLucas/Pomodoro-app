@@ -22,16 +22,35 @@
                 <h3>Take a break</h3>
             </div>
        </div>
-       <div class="pomodoroBox ui segment">
-           <div class="timerBox">
-            <button class="ui button pausar"><i class="pause icon"></i></button>
-               <h2 class="time ui inverted pink segment huge header">
-                   <span class="minutes">0</span>
-                   <span>:</span>
-                   <span class="seconds">0</span>
-                </h2>
+       <div class="pomodoroBox ui segment padded">
+           <div class="timerBox ui equal height grid center aligned middle aligned">
+            <div class="ui five wide row">
+                <h2 class="time ui inverted teal segment huge header five wide column">
+                    <span class="minutes ui">0</span>
+                    <span>:</span>
+                    <span class="seconds ui">0</span>
+                 </h2>
+             </div>       
+            <div class="ui two wide row center aligned">
+                <button class="ui button pausar center aligned">
+                    <i class="pause icon"></i>
+                </button>
+            </div>   
            </div>
            <div class="controls ui segment">
+               <div class="message ui padded segment pomodoroNotif hidden">
+                   <div class="ui pointing red basic label">
+                        <span>Você está trabalhando há 25 minutos!</span> <br>
+                        <span>Deseja fazer uma pausa?</span>
+                   </div>
+               </div>    
+                <div class="message ui padded segment breakIsOver hidden">
+                    <div class="ui pointing green basic large label">
+                        <span>Energias recuperadas!</span> <br>
+                        <span>Podemos voltar?</span>
+                    </div>
+                </div>
+               
                <button class="ui inverted red button hidden postpone" ng-click='postpone()'>Adiar +10min</button>
                <button class="ui inverted green button hidden break" ng-click='breakStart()'>Fazer uma pausa</button>
                <button class="ui inverted red button button hidden quit" ng-click='closeCycle()'>Vou parar por aqui.</button>

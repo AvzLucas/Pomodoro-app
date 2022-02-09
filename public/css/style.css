@@ -75,3 +75,13 @@ body{
 .controls > .hidden{
     display: none;
 }
+.minutes, .seconds{
+    font-size: 32px;
+}
+.red.basic.label > span, .green.basic.label > span{
+    font-size:18px;
+}
+.message.ui.padded.segment{
+    background-color: rgb(163, 240, 197);
+    border: 0;
+} 

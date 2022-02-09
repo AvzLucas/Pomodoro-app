@@ -8,15 +8,19 @@ angular.module('app').controller('APIctrl', function($scope, $http){
         //show buttons
         $scope.displayButtons('break')
         $scope.displayButtons('postponeBtn')
+        //show message
+        $scope.displayMessage('pomodoroNotif')
     })
 
     socket.on('breakIsOver', ()=>{
         $scope.breakIsOverNotification()
         $scope.displayButtons('resumeWork')
         $scope.displayButtons('quit')
+        $scope.displayMessage('breakIsOver')
     })
 
     $scope.pomodoroStart = ()=>{
+        $scope.resetMessageClasses()
         $scope.resetButtonClasses()
         socket.emit('interaction')
         socket.emit('startTimer')
@@ -33,6 +37,7 @@ angular.module('app').controller('APIctrl', function($scope, $http){
     }
 
     $scope.breakStart = ()=>{
+        $scope.resetMessageClasses()
         $scope.resetButtonClasses()
         socket.emit('interaction')
         socket.emit('break')
@@ -49,6 +54,7 @@ angular.module('app').controller('APIctrl', function($scope, $http){
     }
 
     $scope.postpone = ()=>{
+        $scope.resetMessageClasses()
         $scope.resetButtonClasses()
         socket.emit('interaction')
         socket.emit('postponeBreak')
@@ -95,6 +101,28 @@ angular.module('app').controller('APIctrl', function($scope, $http){
             case 'resumeWork' :
                 resumeWork.classList = 'ui inverted green button resumeWork'    
         }
+    }
+
+    $scope.displayMessage = (c) => {
+        let pomodoroMsg = document.querySelector('.pomodoroNotif')
+        let breakIsOver = document.querySelector('.breakIsOver')
+
+        switch(c){
+            case 'pomodoroNotif':
+                pomodoroMsg.classList = 'message ui padded segment pomodoroNotif '
+                break;
+            case 'breakIsOver' :
+                breakIsOver.classList = 'message ui padded segment breakIsOver '
+                break;
+            }
+    }
+
+    $scope.resetMessageClasses = ()=>{
+        let pomodoroMsg = document.querySelector('.pomodoroNotif')
+        let breakIsOver = document.querySelector('.breakIsOver')
+
+        pomodoroMsg.classList = 'pomodoroNotif hidden'
+        breakIsOver.classList = 'breakIsOver hidden'
     }
 
     $scope.resetButtonClasses = () => {
