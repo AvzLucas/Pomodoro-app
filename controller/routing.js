@@ -17,11 +17,20 @@ module.exports = function(io){
 
         socket.on('startTimer',()=> {
             console.log('ouvi o evento')
-            if(pomodoroCycle == 4){
+            if(pomodoroCycle == 5){
                 tm.start({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
             }else{
                 tm.start({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})
             }
+            // listen for pause and resume
+            socket.on('pauseTimer', ()=>{
+                tm.pause()
+            })
+
+            socket.on('resumeTimer', ()=>{
+                tm.start()
+            })
+
             tm.addEventListener('targetAchieved',()=>{
                 console.log('target achieved')
 
@@ -43,6 +52,17 @@ module.exports = function(io){
         socket.on('postponeBreak', ()=>{
             console.log('adiar a pausa em 10min')
             tm.start({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
+
+            // listen for pause and resume
+            socket.on('pauseTimer', ()=>{
+                tm.pause()
+            })
+
+            socket.on('resumeTimer', ()=>{
+                tm.start()
+            })
+
+
             tm.addEventListener('targetAchieved', ()=>{
                 console.log('target achieved')
 
@@ -62,10 +82,18 @@ module.exports = function(io){
 
         socket.on('break', ()=>{
             console.log('iniciando uma pausa')
-            tm.start({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})        
+            tm.start({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})     
+            // listen for pause and resume timer 
+            socket.on('pauseTimer', ()=>{
+                tm.pause()
+            })
+
+            socket.on('resumeTimer', ()=>{
+                tm.start()
+            })
+  
             tm.addEventListener('targetAchieved', ()=>{
                 socket.emit('breakIsOver')
-
                 let interv = setInterval(()=>{
                     socket.emit('breakIsOver')
                 }, 10000)

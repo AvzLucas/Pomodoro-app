@@ -35,13 +35,16 @@
                 <button class="ui button pausar center aligned">
                     <i class="pause icon"></i>
                 </button>
+                <button class="ui button playBtn center aligned">
+                    <i class="play icon"></i>
+                </button>
             </div>   
            </div>
            <div class="controls ui segment">
                <div class="message ui padded segment pomodoroNotif hidden">
                    <div class="ui pointing red basic label">
                         <span>Você está trabalhando há 25 minutos!</span> <br>
-                        <span>Deseja fazer uma pausa?</span>
+                        <span>Faça uma pausa curta.</span>
                    </div>
                </div>    
                 <div class="message ui padded segment breakIsOver hidden">
@@ -50,12 +53,21 @@
                         <span>Podemos voltar?</span>
                     </div>
                 </div>
+                <div class="message ui padded segment fifthPomodoro hidden">
+                    <div class="ui pointing red basic label">
+                         <span>Você realizou 5 pomodoros.</span><br>
+                         <span>Faça uma pausa longa.</span>
+                    </div>
+                </div>    
                
                <button class="ui inverted red button hidden postpone" ng-click='postpone()'>Adiar +10min</button>
                <button class="ui inverted green button hidden break" ng-click='breakStart()'>Fazer uma pausa</button>
                <button class="ui inverted red button button hidden quit" ng-click='closeCycle()'>Vou parar por aqui.</button>
                <button class="ui inverted green button hidden resumeWork" ng-click='pomodoroStart()'>Ok. Vamos lá!</button>
            </div>
+       </div>
+       <div class="pomodoroCounter">
+           <h2 class="ui grey header">Pomodoros realizados : <span>{{qtPomodoro}}</span></h2>
        </div>
     </div>
     <script src="../js/angular/angular.min.js"></script>

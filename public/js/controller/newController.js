@@ -1,9 +1,12 @@
 angular.module('app', [])
 angular.module('app').controller('APIctrl', function($scope, $http){
-
+    $scope.pomodoroCounter = 0
+    $scope.qtPomodoro = 0
     const socket = io.connect()
 
     socket.on('pomodoroFinished', ()=>{
+        $scope.pomodoroCounter++
+        $scope.qtPomodoro++
         $scope.sendNotification()
         //show buttons
         $scope.displayButtons('break')
@@ -22,10 +25,34 @@ angular.module('app').controller('APIctrl', function($scope, $http){
     $scope.pomodoroStart = ()=>{
         $scope.resetMessageClasses()
         $scope.resetButtonClasses()
+        
+        let pauseBtn = document.querySelector('.pausar')
+        let playBtn = document.querySelector('.playBtn')
+
         socket.emit('interaction')
         socket.emit('startTimer')
-        let tm = new easytimer.Timer({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})
+        if($scope.pomodoroCounter == 5){
+            let tm = new easytimer.Timer({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
+            $scope.pomodoroCounter = 0
+        }else{
+            let tm = new easytimer.Timer({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})
+        }
         tm.start()
+
+        pauseBtn.addEventListener('click', ()=>{
+            pauseBtn.classList = 'ui button pausar center aligned disabled'
+            playBtn.classList = 'ui button playBtn center aligned'
+            socket.emit('pauseTimer')
+            tm.pause()
+        })
+
+        playBtn.addEventListener('click', ()=>{
+            playBtn.classList = 'ui button playBtn center aligned disabled'
+            pauseBtn.classList = 'ui button pausar center aligned'
+            socket.emit('resumeTimer')
+            tm.start()
+        })
+
         //dados pro html
         let minutes = document.querySelector('.minutes')
         let seconds = document.querySelector('.seconds')
@@ -39,10 +66,28 @@ angular.module('app').controller('APIctrl', function($scope, $http){
     $scope.breakStart = ()=>{
         $scope.resetMessageClasses()
         $scope.resetButtonClasses()
+        let pauseBtn = document.querySelector('.pausar')
+        let playBtn = document.querySelector('.playBtn')
+
         socket.emit('interaction')
         socket.emit('break')
         let tm = new easytimer.Timer({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})
         tm.start()
+
+        pauseBtn.addEventListener('click', ()=>{
+            pauseBtn.classList = 'ui button pausar center aligned disabled'
+            playBtn.classList = 'ui button playBtn center aligned'
+            socket.emit('pauseTimer')
+            tm.pause()
+        })
+
+        playBtn.addEventListener('click', ()=>{
+            playBtn.classList = 'ui button playBtn center aligned disabled'
+            pauseBtn.classList = 'ui button pausar center aligned'
+            socket.emit('resumeTimer')
+            tm.start()
+        })
+        
          //dados pro html
          let minutes = document.querySelector('.minutes')
          let seconds = document.querySelector('.seconds')
@@ -135,4 +180,5 @@ angular.module('app').controller('APIctrl', function($scope, $http){
         quit.classList = 'ui inverted red button button hidden quit'
         resumeWork.classList = 'ui inverted green button hidden resumeWork'    
     }
+
 })
