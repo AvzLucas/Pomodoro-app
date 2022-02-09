@@ -16,6 +16,8 @@ module.exports = function(io){
         })
 
         socket.on('startTimer',()=> {
+            socket.offAny('pauseTimer')
+            socket.offAny('resumeTimer')
             console.log('ouvi o evento')
             if(pomodoroCycle == 5){
                 tm.start({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
@@ -50,6 +52,8 @@ module.exports = function(io){
         })
 
         socket.on('postponeBreak', ()=>{
+            socket.offAny('pauseTimer')
+            socket.offAny('resumeTimer')
             console.log('adiar a pausa em 10min')
             tm.start({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
 
@@ -81,6 +85,8 @@ module.exports = function(io){
         })
 
         socket.on('break', ()=>{
+            socket.offAny('pauseTimer')
+            socket.offAny('resumeTimer')
             console.log('iniciando uma pausa')
             tm.start({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})     
             // listen for pause and resume timer 

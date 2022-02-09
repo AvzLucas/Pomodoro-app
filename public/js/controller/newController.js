@@ -2,6 +2,9 @@ angular.module('app', [])
 angular.module('app').controller('APIctrl', function($scope, $http){
     $scope.pomodoroCounter = 0
     $scope.qtPomodoro = 0
+    let tm = new easytimer.Timer()
+    let pauseBtn = document.querySelector('.pausar')
+    let playBtn = document.querySelector('.playBtn')
     const socket = io.connect()
 
     socket.on('pomodoroFinished', ()=>{
@@ -26,18 +29,28 @@ angular.module('app').controller('APIctrl', function($scope, $http){
         $scope.resetMessageClasses()
         $scope.resetButtonClasses()
         
-        let pauseBtn = document.querySelector('.pausar')
-        let playBtn = document.querySelector('.playBtn')
-
+        // remover listeners anteriores dos botoes
+        pauseBtn.removeEventListener('click',  ()=>{
+            pauseBtn.classList = 'ui button pausar center aligned disabled'
+            playBtn.classList = 'ui button playBtn center aligned'
+            socket.emit('pauseTimer')
+            tm.pause()
+        })
+        playBtn.removeEventListener('click', ()=>{
+            playBtn.classList = 'ui button playBtn center aligned disabled'
+            pauseBtn.classList = 'ui button pausar center aligned'
+            socket.emit('resumeTimer')
+            tm.start()
+        })
+        
         socket.emit('interaction')
         socket.emit('startTimer')
         if($scope.pomodoroCounter == 5){
-            let tm = new easytimer.Timer({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
+            tm.start({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
             $scope.pomodoroCounter = 0
         }else{
-            let tm = new easytimer.Timer({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})
+            tm.start({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})
         }
-        tm.start()
 
         pauseBtn.addEventListener('click', ()=>{
             pauseBtn.classList = 'ui button pausar center aligned disabled'
@@ -66,13 +79,23 @@ angular.module('app').controller('APIctrl', function($scope, $http){
     $scope.breakStart = ()=>{
         $scope.resetMessageClasses()
         $scope.resetButtonClasses()
-        let pauseBtn = document.querySelector('.pausar')
-        let playBtn = document.querySelector('.playBtn')
+        // remove prior event Listeners from buttons
+        pauseBtn.removeEventListener('click',  ()=>{
+            pauseBtn.classList = 'ui button pausar center aligned disabled'
+            playBtn.classList = 'ui button playBtn center aligned'
+            socket.emit('pauseTimer')
+            tm.pause()
+        })
+        playBtn.removeEventListener('click', ()=>{
+            playBtn.classList = 'ui button playBtn center aligned disabled'
+            pauseBtn.classList = 'ui button pausar center aligned'
+            socket.emit('resumeTimer')
+            tm.start()
+        })
 
         socket.emit('interaction')
         socket.emit('break')
-        let tm = new easytimer.Timer({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})
-        tm.start()
+        tm.start({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})
 
         pauseBtn.addEventListener('click', ()=>{
             pauseBtn.classList = 'ui button pausar center aligned disabled'
@@ -103,8 +126,8 @@ angular.module('app').controller('APIctrl', function($scope, $http){
         $scope.resetButtonClasses()
         socket.emit('interaction')
         socket.emit('postponeBreak')
-        let tm = new easytimer.Timer({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
-        tm.start()
+        tm.start({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
+       
           //dados pro html
           let minutes = document.querySelector('.minutes')
           let seconds = document.querySelector('.seconds')
