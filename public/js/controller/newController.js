@@ -46,10 +46,10 @@ angular.module('app').controller('APIctrl', function($scope, $http){
         socket.emit('interaction')
         socket.emit('startTimer')
         if($scope.pomodoroCounter == 5){
-            tm.start({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
+            tm.start({countdown: true, startValues : {minutes : 10}, targetValues : {seconds : 0}})
             $scope.pomodoroCounter = 0
         }else{
-            tm.start({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})
+            tm.start({countdown: true, startValues : {minutes : 5}, targetValues : {seconds : 0}})
         }
 
         pauseBtn.addEventListener('click', ()=>{
@@ -95,7 +95,7 @@ angular.module('app').controller('APIctrl', function($scope, $http){
 
         socket.emit('interaction')
         socket.emit('break')
-        tm.start({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})
+        tm.start({countdown: true, startValues : {minutes : 5}, targetValues : {seconds : 0}})
 
         pauseBtn.addEventListener('click', ()=>{
             pauseBtn.classList = 'ui button pausar center aligned disabled'

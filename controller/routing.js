@@ -19,13 +19,7 @@ module.exports = function(io){
         socket.on('startTimer',()=> {
             console.log('ouvi o evento')
             console.log(pomodoroCycle)
-            if(pomodoroCycle == 5){
-                pomodoroCycle = 0
-                tm.start({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
-            }else{
-                tm.start({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})
-            }
-            
+            tm.start({countdown: true, startValues : {minutes : 5}, targetValues : {seconds : 0}})  
             tm.addEventListener('targetAchieved',()=>{
                 console.log('target achieved')
 
@@ -42,7 +36,7 @@ module.exports = function(io){
 
         socket.on('postponeBreak', ()=>{
             console.log('adiar a pausa em 10min')
-            tm.start({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
+            tm.start({countdown: true, startValues : {minutes : 10}, targetValues : {seconds : 0}})
 
             tm.addEventListener('targetAchieved', ()=>{
                 console.log('target achieved')
@@ -59,7 +53,13 @@ module.exports = function(io){
 
         socket.on('break', ()=>{
             console.log('iniciando uma pausa')
-            tm.start({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})     
+            
+            if(pomodoroCycle == 5){
+                pomodoroCycle = 0
+                tm.start({countdown: true, startValues : {minutes : 10}, targetValues : {seconds : 0}})
+            }else{
+                tm.start({countdown: true, startValues : {minutes : 5}, targetValues : {seconds : 0}})
+            }   
             tm.addEventListener('targetAchieved', ()=>{
                 socket.emit('breakIsOver')
                 interv = setInterval(()=>{
