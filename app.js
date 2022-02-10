@@ -16,4 +16,4 @@ const route = require('./controller/routing')(io)
 
 
 
-http.listen(3005, console.log('The app is live on port 3005'))
+http.listen(80, console.log('The app is live on port 80'))

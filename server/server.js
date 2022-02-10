@@ -5,6 +5,7 @@ const app = express()
 app.get('/', (req,res)=>{
     res.sendFile('C:/Users/lucas.avozani/Documents/GitHub/Pomodoro-app/public/views/index.html')
 })
+
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
 
