@@ -9,9 +9,10 @@ module.exports = function(io){
     let interv = null
 
     io.on('connection', (socket)=>{
-        console.log('front conectado')
-              
-        socket.emit('listening')
+        const socketId = socket.id
+
+        console.log(socketId + 'conectou')
+        socket.to(socket.id).emit('greet')      
 
         socket.on('disconnect', function(){
             console.log('Desconectado')
@@ -37,7 +38,7 @@ module.exports = function(io){
                 socket.emit('pomodoroFinished', {pomodoroCycle, totalPomodoro})
 
                 interv = setInterval(()=>{
-                    socket.emit('pomodoroFinished',{pomodoroCycle, totalPomodoro})
+                    socket.emit('pomodoroFinished', {pomodoroCycle, totalPomodoro})
                 }, 10000)
 
                 pomodoroCycle++

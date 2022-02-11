@@ -13,7 +13,9 @@ angular.module('app').controller('APIctrl', function($scope, $http){
         minutes.innerHTML = data.minutes
         seconds.innerHTML = data.seconds
     })
-
+    socket.on('greet', ()=>{
+        console.log('cumprimento')
+    })
     socket.on('pomodoroFinished', (dado)=>{
         $scope.pomodoroCounter = dado.pomodoroCycle
         $scope.qtPomodoro = dado.totalPomodoro
