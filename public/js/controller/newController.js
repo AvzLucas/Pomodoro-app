@@ -26,11 +26,12 @@ angular.module('app').controller('APIctrl', function($scope, $http){
     })
 
     $scope.pomodoroStart = ()=>{
+        playBtn.classList = 'ui button playBtn center aligned disabled'
         $scope.resetMessageClasses()
         $scope.resetButtonClasses()
-        
-        // remover listeners anteriores dos botoes
-        pauseBtn.removeEventListener('click',  ()=>{
+       
+         // remover listeners anteriores dos botoes
+         pauseBtn.removeEventListener('click',  ()=>{
             pauseBtn.classList = 'ui button pausar center aligned disabled'
             playBtn.classList = 'ui button playBtn center aligned'
             socket.emit('pauseTimer')
@@ -42,11 +43,6 @@ angular.module('app').controller('APIctrl', function($scope, $http){
             socket.emit('resumeTimer')
             tm.start()
         })
-        
-        socket.emit('interaction')
-        socket.emit('startTimer')
-    
-        tm.start({countdown: true, startValues : {minutes : 25}, targetValues : {seconds : 0}})
 
         pauseBtn.addEventListener('click', ()=>{
             pauseBtn.classList = 'ui button pausar center aligned disabled'
@@ -61,6 +57,16 @@ angular.module('app').controller('APIctrl', function($scope, $http){
             socket.emit('resumeTimer')
             tm.start()
         })
+        
+        if(tm.isPaused()){
+            tm.start()
+            return 
+        }
+        
+        socket.emit('interaction')
+        socket.emit('startTimer')
+    
+        tm.start({countdown: true, startValues : {minutes : 25}, targetValues : {seconds : 0}})
 
         //dados pro html
         let minutes = document.querySelector('.minutes')
