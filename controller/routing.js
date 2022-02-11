@@ -32,6 +32,8 @@ module.exports = function(io){
                         })
             })  
             tm.addEventListener('targetAchieved',()=>{
+                pomodoroCycle++
+                totalPomodoro++
                 console.log('target achieved')
 
                 socket.emit('pomodoroFinished', {pomodoroCycle, totalPomodoro})
@@ -40,8 +42,7 @@ module.exports = function(io){
                     socket.emit('pomodoroFinished',{pomodoroCycle, totalPomodoro})
                 }, 10000)
 
-                pomodoroCycle++
-                totalPomodoro++
+               
                 tm.removeAllEventListeners()
             })
         })

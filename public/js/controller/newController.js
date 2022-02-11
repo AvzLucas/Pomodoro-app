@@ -6,6 +6,7 @@ angular.module('app').controller('APIctrl', function($scope, $http){
     let pauseBtn = document.querySelector('.pausar')
     let playBtn = document.querySelector('.playBtn')
     const socket = io.connect()
+    let headerTotalPomodoro = document.querySelector('.ui.grey.header>span')
 
     let minutes = document.querySelector('.minutes')
     let seconds = document.querySelector('.seconds')
@@ -16,7 +17,7 @@ angular.module('app').controller('APIctrl', function($scope, $http){
 
     socket.on('pomodoroFinished', (dado)=>{
         $scope.pomodoroCounter = dado.pomodoroCycle
-        $scope.qtPomodoro = dado.totalPomodoro
+        headerTotalPomodoro.innerHTML = dado.totalPomodoro
         console.log(dado)
     
         $scope.sendNotification()
