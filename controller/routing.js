@@ -2,14 +2,15 @@ const timer = require('easytimer.js')
 
 
 module.exports = function(io){
-    let pomodoroCycle = 0;
-    let totalPomodoro = 0;
-    console.log(pomodoroCycle)
-    let tm = new timer.Timer()
-    let interv = null
 
     io.on('connection', (socket)=>{
         const socketId = socket.id
+
+        let pomodoroCycle = 0;
+        let totalPomodoro = 0;
+        console.log(pomodoroCycle)
+        let tm = new timer.Timer()
+        let interv = null
 
         console.log(socketId + 'conectou')
         socket.to(socket.id).emit('greet')      
@@ -43,7 +44,6 @@ module.exports = function(io){
                     socket.emit('pomodoroFinished', {pomodoroCycle, totalPomodoro})
                 }, 10000)
 
-               
                 tm.removeAllEventListeners()
             })
         })
