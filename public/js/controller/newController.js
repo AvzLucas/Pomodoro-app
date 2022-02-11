@@ -1,8 +1,6 @@
 angular.module('app', [])
 angular.module('app').controller('APIctrl', function($scope, $http){
 
-
-
     $scope.qtPomodoro = 0
     $scope.pomodoroCounter = 0
     let pauseBtn = document.querySelector('.pausar')
@@ -48,11 +46,12 @@ angular.module('app').controller('APIctrl', function($scope, $http){
         $scope.resetButtonClasses()
        
          // remover listeners anteriores dos botoes
-         pauseBtn.removeEventListener('click',  ()=>{
+        pauseBtn.removeEventListener('click',  ()=>{
             pauseBtn.classList = 'ui button pausar center aligned disabled'
             playBtn.classList = 'ui button playBtn center aligned'
             socket.emit('pauseTimer')
         })
+
         playBtn.removeEventListener('click', ()=>{
             playBtn.classList = 'ui button playBtn center aligned disabled'
             pauseBtn.classList = 'ui button pausar center aligned'
@@ -63,14 +62,12 @@ angular.module('app').controller('APIctrl', function($scope, $http){
             pauseBtn.classList = 'ui button pausar center aligned disabled'
             playBtn.classList = 'ui button playBtn center aligned'
             socket.emit('pauseTimer')
-        
         })
 
         playBtn.addEventListener('click', ()=>{
             playBtn.classList = 'ui button playBtn center aligned disabled'
             pauseBtn.classList = 'ui button pausar center aligned'
             socket.emit('resumeTimer')
-         
         })
         
         socket.emit('interaction')

@@ -62,7 +62,13 @@
     </div>
     <script>
         window.onload = ()=>{
-            Notification.requestPermission()
+            
+            Notification.requestPermission().then(function(getperm) 
+{ 
+
+    console.log('Perm granted', getperm) 
+
+});
         }
     </script>
     <script src="../js/angular/angular.min.js"></script>
