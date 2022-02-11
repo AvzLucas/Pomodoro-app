@@ -15,7 +15,12 @@ angular.module('app').controller('APIctrl', function($scope, $http){
         $scope.displayButtons('break')
         $scope.displayButtons('postponeBtn')
         //show message
-        $scope.displayMessage('pomodoroNotif')
+        if($scope.pomodoroCounter == 5){
+            $scope.displayMessage('fifthPomodoro')
+        }else{
+            $scope.displayMessage('pomodoroNotif')
+        }
+        
     })
 
     socket.on('breakIsOver', ()=>{
@@ -27,6 +32,8 @@ angular.module('app').controller('APIctrl', function($scope, $http){
 
     $scope.pomodoroStart = ()=>{
         playBtn.classList = 'ui button playBtn center aligned disabled'
+        pauseBtn.classList = 'ui button pausar center aligned'
+
         $scope.resetMessageClasses()
         $scope.resetButtonClasses()
        
@@ -66,7 +73,7 @@ angular.module('app').controller('APIctrl', function($scope, $http){
         socket.emit('interaction')
         socket.emit('startTimer')
     
-        tm.start({countdown: true, startValues : {minutes : 25}, targetValues : {seconds : 0}})
+        tm.start({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})
 
         //dados pro html
         let minutes = document.querySelector('.minutes')
@@ -81,7 +88,7 @@ angular.module('app').controller('APIctrl', function($scope, $http){
     $scope.breakStart = ()=>{
         $scope.resetMessageClasses()
         $scope.resetButtonClasses()
-        // remove prior event Listeners from buttons
+        //remove prior event Listeners from buttons
         pauseBtn.removeEventListener('click',  ()=>{
             pauseBtn.classList = 'ui button pausar center aligned disabled'
             playBtn.classList = 'ui button playBtn center aligned'
@@ -94,15 +101,6 @@ angular.module('app').controller('APIctrl', function($scope, $http){
             socket.emit('resumeTimer')
             tm.start()
         })
-
-        socket.emit('interaction')
-        socket.emit('break')
-        if($scope.pomodoroCounter == 5){
-            tm.start({countdown: true, startValues : {minutes : 15}, targetValues : {seconds : 0}})
-            $scope.pomodoroCounter = 0
-        }else{
-            tm.start({countdown: true, startValues : {minutes : 5}, targetValues : {seconds : 0}})
-        }
 
         pauseBtn.addEventListener('click', ()=>{
             pauseBtn.classList = 'ui button pausar center aligned disabled'
@@ -117,6 +115,17 @@ angular.module('app').controller('APIctrl', function($scope, $http){
             socket.emit('resumeTimer')
             tm.start()
         })
+
+        socket.emit('interaction')
+
+        socket.emit('break')
+
+        if($scope.pomodoroCounter == 5){
+            tm.start({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
+            $scope.pomodoroCounter = 0
+        }else{
+            tm.start({countdown: true, startValues : {seconds : 5}, targetValues : {seconds : 0}})
+        }
         
          //dados pro html
          let minutes = document.querySelector('.minutes')
@@ -133,7 +142,7 @@ angular.module('app').controller('APIctrl', function($scope, $http){
         $scope.resetButtonClasses()
         socket.emit('interaction')
         socket.emit('postponeBreak')
-        tm.start({countdown: true, startValues : {minutes : 10}, targetValues : {seconds : 0}})
+        tm.start({countdown: true, startValues : {seconds : 10}, targetValues : {seconds : 0}})
           //dados pro html
           let minutes = document.querySelector('.minutes')
           let seconds = document.querySelector('.seconds')
@@ -180,6 +189,7 @@ angular.module('app').controller('APIctrl', function($scope, $http){
     $scope.displayMessage = (c) => {
         let pomodoroMsg = document.querySelector('.pomodoroNotif')
         let breakIsOver = document.querySelector('.breakIsOver')
+        let fPomodoro = document.querySelector('.fifthPomodoro')
 
         switch(c){
             case 'pomodoroNotif':
@@ -188,15 +198,19 @@ angular.module('app').controller('APIctrl', function($scope, $http){
             case 'breakIsOver' :
                 breakIsOver.classList = 'message ui padded segment breakIsOver '
                 break;
+            case 'fifthPomodoro' :
+                fPomodoro.classList = 'message ui padded segment fifthPomodoro'    
             }
     }
 
     $scope.resetMessageClasses = ()=>{
         let pomodoroMsg = document.querySelector('.pomodoroNotif')
         let breakIsOver = document.querySelector('.breakIsOver')
-
+        let fPomodoro = document.querySelector('.fifthPomodoro')
         pomodoroMsg.classList = 'pomodoroNotif hidden'
         breakIsOver.classList = 'breakIsOver hidden'
+        fPomodoro.classList = 'message ui padded segment fifthPomodoro hidden'  
+
     }
 
     $scope.resetButtonClasses = () => {

@@ -12,16 +12,6 @@
 </head>
 <body>
     <div class="wrapper ui container center aligned" ng-controller='APIctrl as ctrl'>
-       <div class="playPause">
-            <div class="playButton">
-                <i class="fa fa-play-circle btn1 start" ng-click='pomodoroStart()' aria-hidden="true" ></i>
-                <h3>Start working</h3>
-            </div>
-            <div class="pauseButton">
-                <i class="fa fa-pause-circle btn2 pause" ng-click='timerPomodoro.pause()'aria-hidden="true" ng-click='pause()'></i>
-                <h3>Take a break</h3>
-            </div>
-       </div>
        <div class="pomodoroBox ui segment padded">
            <div class="timerBox ui equal height grid center aligned middle aligned">
             <div class="ui five wide row">
@@ -32,7 +22,7 @@
                  </h2>
              </div>       
             <div class="ui two wide row center aligned">
-                <button class="ui button pausar center aligned">
+                <button class="ui button pausar center aligned disabled">
                     <i class="pause icon"></i>
                 </button>
                 <button class="ui button playBtn center aligned" ng-click='pomodoroStart()'>
