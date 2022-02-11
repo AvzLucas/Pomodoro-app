@@ -6,6 +6,8 @@ module.exports = function(io){
     io.on('connection', (socket)=>{
         const socketId = socket.id
 
+        console.log(io)
+
         let pomodoroCycle = 0;
         let totalPomodoro = 0;
         console.log(pomodoroCycle)
