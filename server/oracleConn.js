@@ -7,7 +7,8 @@ var connOracle = async function(){
     password: 'treinamento07',
     connectString: '192.168.20.239:1521/DESENVV4.kunden.local'
 })
-console.log('conexão estabelecida');}
+console.log('conexão estabelecida');
+}
 
 module.exports = async function(){
     console.log('Módulo de conexão com o db foi carregado')
