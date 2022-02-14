@@ -1,6 +1,4 @@
 const timer = require('easytimer.js')
-
-
 module.exports = function(io){
 
     io.on('connection', (socket)=>{
